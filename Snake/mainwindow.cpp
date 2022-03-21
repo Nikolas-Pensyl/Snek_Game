@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 QSound music("../game_music.wav");
+QSound munch("../Munch.wav");
+QSound dead("../Death.wav");
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
     head2_right.load("../Snake_Head2_Right.png");
     head2_down.load("../Snake_Head2_Down.png");
     music.setLoops(0);
+    munch.setLoops(0);
+    dead.setLoops(0);
 }
 
 void MainWindow::getHighScore() {
@@ -196,6 +200,11 @@ void MainWindow::painting() {
 void MainWindow::newFood() {
     bool clear = false;
     srand(time(NULL));
+    if(munch.isFinished()) {
+        munch.play();
+    } else {
+        munch.play();
+    }
     do {
         clear = true;
         food[0] = rand()%15;
@@ -287,6 +296,7 @@ vector<vector<int>> MainWindow::move(vector<vector<int>> snek, int direct) {
                         if(snek[0][0]+1==food[0] && snek[0][1]==food[1]) {
                             snek.push_back(snek[i]);
                             newFood();
+                            munch.play();
                         }
                         break;
                     }
@@ -465,6 +475,11 @@ void MainWindow::on_Player2but_toggled(bool checked) {
 void MainWindow::GameOver() {
     if(game_over) {
     music.stop();
+    if(dead.isFinished()) {
+        dead.play();
+    } else {
+        dead.play();
+    }
     QMessageBox msgBox;
     QString GameText;
     if(players==2) {
