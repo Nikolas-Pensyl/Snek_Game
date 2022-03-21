@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//Special credit to Alex Menilli who voiced Death sound
+//Credit to Nik Pensyl for producing all sounds and Recording of Munch Sound
+//Credit to: https://freemidi.org/download3-26214-all-of-me--john-legend for Midi files of music generated.
 QSound music("../game_music.wav");
 QSound munch("../Munch.wav");
 QSound dead("../Death.wav");
