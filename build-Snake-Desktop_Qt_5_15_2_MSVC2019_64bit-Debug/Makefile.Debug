@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\Snake -I. -IC:\Qt\5.15.2\msvc2019_64\include -IC:\Qt\5.15.2\msvc2019_64\include\QtMultimedia -IC:\Qt\5.15.2\msvc2019_64\include\QtWidgets -IC:\Qt\5.15.2\msvc2019_64\include\QtGui -IC:\Qt\5.15.2\msvc2019_64\include\QtANGLE -IC:\Qt\5.15.2\msvc2019_64\include\QtNetwork -IC:\Qt\5.15.2\msvc2019_64\include\QtCore -Idebug -I. -I/include -IC:\Qt\5.15.2\msvc2019_64\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /DEBUG /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = C:\Qt\5.15.2\msvc2019_64\lib\Qt5Multimediad.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Widgetsd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib  C:\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib /LIBPATH:C:\openssl\lib /LIBPATH:C:\Utils\my_sql\mysql-5.7.25-winx64\lib /LIBPATH:C:\Utils\postgresql\pgsql\lib shell32.lib 
+LIBS          = C:\Qt\5.15.2\msvc2019_64\lib\Qt5Multimediad.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Widgetsd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib debug\Snake_resource.res  C:\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib /LIBPATH:C:\openssl\lib /LIBPATH:C:\Utils\my_sql\mysql-5.7.25-winx64\lib /LIBPATH:C:\Utils\postgresql\pgsql\lib shell32.lib 
 QMAKE         = C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -40,7 +40,7 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = debug\Snake_resource.res
 SED           = $(QMAKE) -install sed
 MOVE          = move
 
@@ -132,11 +132,14 @@ DESTDIR_TARGET = debug\Snake.exe
 first: all
 all: Makefile.Debug  debug\Snake.exe
 
-debug\Snake.exe: C:\Qt\5.15.2\msvc2019_64\lib\Qt5Multimediad.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Widgetsd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib C:\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib ui_mainwindow.h $(OBJECTS) 
+debug\Snake.exe: C:\Qt\5.15.2\msvc2019_64\lib\Qt5Multimediad.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Widgetsd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib C:\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib C:\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib ui_mainwindow.h $(OBJECTS) debug\Snake_resource.res
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
 debug\main.obj debug\mainwindow.obj debug\moc_mainwindow.obj
 $(LIBS)
 <<
+
+debug\Snake_resource.res: Snake_resource.rc
+	rc /NOLOGO -D_DEBUG $(DEFINES) -fo debug\Snake_resource.res Snake_resource.rc
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Debug ..\Snake\Snake.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -149,6 +152,7 @@ dist:
 clean: compiler_clean 
 	-$(DEL_FILE) debug\main.obj debug\mainwindow.obj debug\moc_mainwindow.obj
 	-$(DEL_FILE) debug\Snake.vc.pdb debug\Snake.ilk debug\Snake.idb
+	-$(DEL_FILE) debug\Snake_resource.res
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash debug\Snake.pdb
@@ -591,6 +595,9 @@ debug\mainwindow.obj: ..\Snake\mainwindow.cpp ..\Snake\mainwindow.h \
 		C:\Qt\5.15.2\msvc2019_64\include\QtGui\qinputmethod.h \
 		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QButtonGroup \
 		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qbuttongroup.h \
+		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLabel \
+		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlabel.h \
+		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qframe.h \
 		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QMenuBar \
 		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenubar.h \
 		C:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenu.h \
