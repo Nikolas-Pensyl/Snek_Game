@@ -12,6 +12,7 @@
 #include <string>
 #include <fstream>
 #include <QSound>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,14 +42,18 @@ protected:
 private slots:
     void on_Beginbut_clicked();
     void on_Instructbut_clicked();
+    void on_ctrInv_toggled(bool checked);
     void on_Gamerbut_toggled(bool checked);
     void on_Mediumbut_toggled(bool checked);
     void on_Easybut_toggled(bool checked);
     void on_Player1but_toggled(bool checked);
     void on_Player2but_toggled(bool checked);
     void painting();
+
+
 private:
     bool start = false;
+    bool inverted = false;
     int begin = 0;
     bool game_over = false;
     int winner = -1;

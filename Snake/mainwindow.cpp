@@ -239,10 +239,11 @@ void MainWindow::on_Beginbut_clicked() {
       ui->Mediumbut->hide();
       ui->Player1but->hide();
       ui->Player2but->hide();
-
+      ui->ctrInv->hide();
       ui->sneklab->hide();
       ui->playerlab->hide();
       ui->difflab->hide();
+
       vector<int> coords;
       coords.push_back(5);
       coords.push_back(7);
@@ -398,58 +399,115 @@ vector<vector<int>> MainWindow::move(vector<vector<int>> snek, int direct) {
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     int key = event->key();
-    switch(key) {
-        case Qt::Key_Left: {
-            if(snek1_direction_current==0 || snek1_direction_current==2) {
-                snek1_direction_new = 1;
+    qDebug()<<"Test";
+    if(!inverted) {
+        switch(key) {
+            case Qt::Key_Left: {
+                if(snek1_direction_current==0 || snek1_direction_current==2) {
+                    snek1_direction_new = 1;
+                }
+                break;
             }
-            break;
+            case Qt::Key_Right: {
+                if(snek1_direction_current==0 || snek1_direction_current==2) {
+                    snek1_direction_new = 3;
+                }
+                break;
+            }
+            case Qt::Key_Up: {
+                if(snek1_direction_current==1 || snek1_direction_current==3) {
+                    snek1_direction_new = 0;
+                }
+                break;
+            }
+            case Qt::Key_Down: {
+                if(snek1_direction_current==1 || snek1_direction_current==3) {
+                    snek1_direction_new = 2;
+                }
+                break;
+            }
         }
-        case Qt::Key_Right: {
-            if(snek1_direction_current==0 || snek1_direction_current==2) {
-                snek1_direction_new = 3;
+        switch(key) {
+            case Qt::Key_A: {
+                if(snek2_direction_current==0 || snek2_direction_current==2) {
+                    snek2_direction_new = 1;
+                }
+                break;
             }
-            break;
+            case Qt::Key_D: {
+                if(snek2_direction_current==0 || snek2_direction_current==2) {
+                    snek2_direction_new = 3;
+                }
+                break;
+            }
+            case Qt::Key_W: {
+                if(snek2_direction_current==1 || snek2_direction_current==3) {
+                    snek2_direction_new = 0;
+                }
+                break;
+            }
+            case Qt::Key_S: {
+                if(snek2_direction_current==1 || snek2_direction_current==3) {
+                    snek2_direction_new = 2;
+                }
+                break;
+            }
         }
-        case Qt::Key_Up: {
-            if(snek1_direction_current==1 || snek1_direction_current==3) {
-                snek1_direction_new = 0;
+    } else {
+        switch(key) {
+            case Qt::Key_Right: {
+                if(snek1_direction_current==0 || snek1_direction_current==2) {
+                    snek1_direction_new = 1;
+                }
+                break;
             }
-            break;
+            case Qt::Key_Left: {
+                if(snek1_direction_current==0 || snek1_direction_current==2) {
+                    snek1_direction_new = 3;
+                }
+                break;
+            }
+            case Qt::Key_Down: {
+                if(snek1_direction_current==1 || snek1_direction_current==3) {
+                    snek1_direction_new = 0;
+                }
+                break;
+            }
+            case Qt::Key_Up: {
+                if(snek1_direction_current==1 || snek1_direction_current==3) {
+                    snek1_direction_new = 2;
+                }
+                break;
+            }
         }
-        case Qt::Key_Down: {
-            if(snek1_direction_current==1 || snek1_direction_current==3) {
-                snek1_direction_new = 2;
+        switch(key) {
+            case Qt::Key_D: {
+                if(snek2_direction_current==0 || snek2_direction_current==2) {
+                    snek2_direction_new = 1;
+                }
+                break;
             }
-            break;
+            case Qt::Key_A: {
+                if(snek2_direction_current==0 || snek2_direction_current==2) {
+                    snek2_direction_new = 3;
+                }
+                break;
+            }
+            case Qt::Key_S: {
+                if(snek2_direction_current==1 || snek2_direction_current==3) {
+                    snek2_direction_new = 0;
+                }
+                break;
+            }
+            case Qt::Key_W: {
+                if(snek2_direction_current==1 || snek2_direction_current==3) {
+                    snek2_direction_new = 2;
+                }
+                break;
+            }
         }
     }
-    switch(key) {
-        case Qt::Key_A: {
-            if(snek2_direction_current==0 || snek2_direction_current==2) {
-                snek2_direction_new = 1;
-            }
-            break;
-        }
-        case Qt::Key_D: {
-            if(snek2_direction_current==0 || snek2_direction_current==2) {
-                snek2_direction_new = 3;
-            }
-            break;
-        }
-        case Qt::Key_W: {
-            if(snek2_direction_current==1 || snek2_direction_current==3) {
-                snek2_direction_new = 0;
-            }
-            break;
-        }
-        case Qt::Key_S: {
-            if(snek2_direction_current==1 || snek2_direction_current==3) {
-                snek2_direction_new = 2;
-            }
-            break;
-        }
-    }
+
 }
 
 void MainWindow::on_Gamerbut_toggled(bool checked) {
@@ -569,6 +627,7 @@ void MainWindow::GameOver() {
         ui->Instructbut->show();
         ui->sneklab->show();
         ui->playerlab->show();
+        ui->ctrInv->show();
         ui->difflab->show();
         begin = 0;
         winner = -1;
@@ -584,5 +643,13 @@ void MainWindow::on_Instructbut_clicked() {
     QString instructions = "Welcome to snek(our version of the snake game).\n\n The object of the game is to grow your snake as big as possible by eating the fruit(red circles). Music will start to play and your snake will start moving at a consistent speed, based on the difficulty chosen. \n\nPlayer 1 will always be the green snake and use the arrow keys to turn in the associated direction. \n\nIf two players is selected then a blue snake will appear as well as a green snake head. The green snake will be player 1 and use the arrow keys while player 2 will use the \"WASD\" keys to move around the grid in attempt to grow and survive.\n\n And most importantly ENJOY :).";
     msgBox.setText(instructions);
     msgBox.exec();
+}
+
+void MainWindow::on_ctrInv_toggled(bool checked) {
+    if(!checked) {
+        inverted = false;
+    } else {
+        inverted = true;
+    }
 }
 
