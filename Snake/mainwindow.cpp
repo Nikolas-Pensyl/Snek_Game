@@ -108,14 +108,14 @@ void MainWindow::paintEvent(QPaintEvent *e) {
             snek2_direction_current = snek2_direction_new;
             Player_score = "Player 2: " + QString::fromStdString(to_string(snek2.size()));
             p.setPen(Qt::white);
-                    p.drawText(550, 50, Player_score);
+                    p.drawText(520, 50, Player_score);
             for(int i =0; i<snek2.size(); i++) {
                 p.setBrush(Qt::blue);
                 if(i!=0) {
                     p.drawImage(snek2[i][0]*50+25, snek2[i][1]*50+100, scales);
                 } else {
                     if(snek2_direction_current==0) {
-                      p.drawImage(snek2[i][0]*50+25, snek2[i][1]*50+100, head2_up);
+                      p.drawImage(snek2[i][0]*50+25, snek2[i][1]*50+75, head2_up);
                     } else if(snek2_direction_current==1) {
                         p.drawImage(snek2[i][0]*50, snek2[i][1]*50+100, head2_left);
                       } else if(snek2_direction_current==2) {
